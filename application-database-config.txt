@@ -9,4 +9,4 @@
 ## Init postgres instance
 Docker run --name eventroll-postgres -e POSTGRES_PASSWORD=eventroll -d -p 5432:5432 postgres
 
-postgres database version 10.4
+postgres database version 10.4.
