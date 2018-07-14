@@ -1,0 +1,6 @@
+-- Docker postgres instance --
+ https://hub.docker.com/_/postgres/
+
+ database = eventroll
+ user = eventroll
+ password = eventroll
