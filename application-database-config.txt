@@ -4,3 +4,7 @@
  database = eventroll
  user = eventroll
  password = eventroll
+
+
+## Init postgres instance
+ ocker run --name eventroll-postgres -e POSTGRES_PASSWORD=eventroll -d -p 5432:5432 postgres
