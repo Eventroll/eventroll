@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Author: William Arustamyan
@@ -16,7 +17,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_event_video")
-public class EventVideo extends DefaultEntity implements MultimediaEntity {
+public class EventVideo implements MultimediaEntity {
 
 
     @Id
@@ -37,6 +38,26 @@ public class EventVideo extends DefaultEntity implements MultimediaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
+
+    @Column(name = "created", nullable = false)
+    private LocalDateTime created;
+
+    @Column(name = "updated", nullable = false)
+    private LocalDateTime updated;
+
+    @Column(name = "deleted", nullable = true)
+    private LocalDateTime deleted;
+
+    @PrePersist
+    protected void onCreate() {
+        this.created = LocalDateTime.now();
+        this.updated = this.created;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updated = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -88,6 +109,30 @@ public class EventVideo extends DefaultEntity implements MultimediaEntity {
     @Override
     public byte[] getData() {
         return this.videoData;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
+    }
+
+    public LocalDateTime getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDateTime deleted) {
+        this.deleted = deleted;
     }
 
     @Override

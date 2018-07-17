@@ -50,12 +50,9 @@ CREATE TABLE t_event_video (
   deleted  TIMESTAMP
 );
 
-CREATE TABLE t_event_loc (
-  id      BIGINT       NOT NULL CONSTRAINT pk_event_location PRIMARY KEY,
-  lat     BIGINT       NOT NULL,
-  lon     BIGINT       NOT NULL,
-  addr    VARCHAR(200) NOT NULL,
-  created TIMESTAMP    NOT NULL,
-  updated TIMESTAMP    NOT NULL,
-  deleted TIMESTAMP
+CREATE TABLE t_event_location (
+  id   BIGINT           NOT NULL CONSTRAINT pk_event_location PRIMARY KEY,
+  lat  DOUBLE PRECISION NOT NULL,
+  lon  DOUBLE PRECISION NOT NULL,
+  addr VARCHAR(200)     NOT NULL
 );
