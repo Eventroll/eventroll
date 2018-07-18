@@ -1,6 +1,5 @@
 package com.eventroll.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -28,7 +27,6 @@ public class EventKeyword {
     @Column(name = "name")
     private String name;
 
-    @JsonIgnore //TODO: Remove in feature, resolve with response DTO. Currently added to avoid Infinite recursion (StackOverflowError)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
