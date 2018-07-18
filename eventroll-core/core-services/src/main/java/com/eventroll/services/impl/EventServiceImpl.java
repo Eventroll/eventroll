@@ -62,7 +62,6 @@ public class EventServiceImpl implements EventService {
         Event savedInstance = eventRepository.save(instance);
 
         entityManager.flush();
-        logger.info("Done saving event with id : {} ...", savedInstance.getId());
 
         return savedInstance;
     }
@@ -85,6 +84,5 @@ public class EventServiceImpl implements EventService {
         Event found = this.get(eventId);
         found.setDeleted(LocalDateTime.now());
         eventRepository.save(found);
-        logger.info("Event with id {} was deleted", found.getId());
     }
 }

@@ -32,29 +32,19 @@ public class EventEndpoint {
 
     @RequestMapping(value = "/event/", method = RequestMethod.POST)
     public AbstractResponse<EventResponseDto> create(@RequestBody final EventCreationRequest creationRequest) {
-
-        logger.info("Creating event with name for user : {}, with name {} ...", "SOME USER", creationRequest.getEventName());
         Event savedInstance = eventService.create(creationRequest);
-        logger.info("Done creating event with id : {} ...", savedInstance.getId());
-
         return new AbstractResponse<>(HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name(), modelMapper.map(savedInstance, EventResponseDto.class));
     }
 
     @RequestMapping(value = "/event/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public AbstractResponse<EventResponseDto> get(@PathVariable("id") long eventId) {
-
-        logger.info("Retrieve single event for user {}, and event id {} ...", "SOME USER", eventId);
         Event foundInstance = eventService.get(eventId);
-        logger.info("Done retrieving event with id : {} ...", foundInstance.getId());
-
         return new AbstractResponse<>(HttpStatus.ACCEPTED.value(), HttpStatus.ACCEPTED.name(), modelMapper.map(foundInstance, EventResponseDto.class));
     }
 
     @RequestMapping(value = "/event/{id}", method = RequestMethod.DELETE)
     public AbstractResponse<Void> delete(@PathVariable("id") long eventId) {
-        logger.info("Deleting event with id {}", eventId);
         eventService.delete(eventId);
-        logger.info("Event with id {} deleted", eventId);
         return new AbstractResponse<>(HttpStatus.NO_CONTENT.value(), HttpStatus.NO_CONTENT.name());
     }
 }
