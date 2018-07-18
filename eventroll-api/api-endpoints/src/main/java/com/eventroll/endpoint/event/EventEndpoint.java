@@ -1,10 +1,10 @@
 package com.eventroll.endpoint.event;
 
-import com.eventroll.common.requestdto.EventCreationRequest;
+import com.eventroll.common.requestdto.event.EventCreationRequest;
 import com.eventroll.common.responsedto.AbstractResponse;
-import com.eventroll.common.responsedto.EventResponseDto;
-import com.eventroll.entity.Event;
-import com.eventroll.services.EventService;
+import com.eventroll.common.responsedto.event.EventResponseDto;
+import com.eventroll.entity.event.Event;
+import com.eventroll.services.event.EventService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
