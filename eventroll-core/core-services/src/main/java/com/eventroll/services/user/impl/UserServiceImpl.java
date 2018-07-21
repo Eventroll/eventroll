@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
  * Author: William Arustamyan
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User get(final long userId) {
-        return null;
+        return userRepository.findByIdAndDeletedIsNull(userId);
     }
 
     @Override
@@ -62,6 +63,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void delete(final long userId) {
-
+        User found = this.get(userId);
+        found.setDeleted(LocalDateTime.now());
+        userRepository.save(found);
+        entityManager.flush();
     }
 }

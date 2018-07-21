@@ -4,6 +4,7 @@ import com.eventroll.common.requestdto.event.EventCreationRequest;
 import com.eventroll.common.requestdto.event.EventModificationRequest;
 import com.eventroll.entity.event.Event;
 import com.eventroll.entity.event.EventLocation;
+import com.eventroll.entity.user.User;
 import com.eventroll.repositories.event.EventRepository;
 import com.eventroll.services.event.EventKeywordService;
 import com.eventroll.services.event.EventLocationService;
@@ -60,6 +61,9 @@ public class EventServiceImpl implements EventService {
         //TODO:Add image and video instances.
 
         Event savedInstance = eventRepository.save(instance);
+
+        //TODO: Resolve user from security context and add to event.
+//        instance.setUser(new User());
 
         entityManager.flush();
 

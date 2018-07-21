@@ -1,5 +1,7 @@
 package com.eventroll.entity.user;
 
+import com.eventroll.entity.event.Event;
+import com.eventroll.entity.event.EventKeyword;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * Author: William Arustamyan
@@ -43,6 +46,9 @@ public class User implements UserDetails {
 
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Event> events;
 
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
@@ -151,6 +157,14 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -190,6 +204,7 @@ public class User implements UserDetails {
                 .append(userName, user.userName)
                 .append(emailAddress, user.emailAddress)
                 .append(enabled, user.enabled)
+                .append(events, user.events)
                 .append(created, user.created)
                 .append(updated, user.updated)
                 .append(deleted, user.deleted)
@@ -205,6 +220,7 @@ public class User implements UserDetails {
                 .append(userName)
                 .append(emailAddress)
                 .append(enabled)
+                .append(events)
                 .append(created)
                 .append(updated)
                 .append(deleted)
@@ -220,6 +236,7 @@ public class User implements UserDetails {
                 .append("userName", userName)
                 .append("emailAddress", emailAddress)
                 .append("enabled", enabled)
+                .append("events", events)
                 .append("created", created)
                 .append("updated", updated)
                 .append("deleted", deleted)

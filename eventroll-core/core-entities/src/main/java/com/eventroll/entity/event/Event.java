@@ -1,6 +1,7 @@
 package com.eventroll.entity.event;
 
 import com.eventroll.common.CategoryType;
+import com.eventroll.entity.user.User;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -56,6 +57,11 @@ public class Event {
     @Enumerated(EnumType.STRING)
     @Column(name = "category_type", nullable = false)
     private CategoryType categoryType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
 
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
@@ -157,6 +163,14 @@ public class Event {
         this.categoryType = categoryType;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -198,6 +212,7 @@ public class Event {
                 .append(eventImages, event.eventImages)
                 .append(eventVideos, event.eventVideos)
                 .append(categoryType, event.categoryType)
+                .append(user, event.user)
                 .append(created, event.created)
                 .append(updated, event.updated)
                 .append(deleted, event.deleted)
@@ -215,6 +230,7 @@ public class Event {
                 .append(eventImages)
                 .append(eventVideos)
                 .append(categoryType)
+                .append(user)
                 .append(created)
                 .append(updated)
                 .append(deleted)
@@ -232,6 +248,7 @@ public class Event {
                 .append("eventImages", eventImages)
                 .append("eventVideos", eventVideos)
                 .append("categoryType", categoryType)
+                .append("user", user)
                 .append("created", created)
                 .append("updated", updated)
                 .append("deleted", deleted)
