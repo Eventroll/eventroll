@@ -1,6 +1,7 @@
-package com.eventroll.entity;
+package com.eventroll.entity.event;
 
 import com.eventroll.common.CategoryType;
+import com.eventroll.entity.user.User;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_event")
-public class Event extends DefaultEntity {
+public class Event {
 
     @Id
     @SequenceGenerator(name = "seq_event", sequenceName = "seq_event")
@@ -29,12 +30,11 @@ public class Event extends DefaultEntity {
     @Column(name = "event_name", nullable = false)
     private String eventName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "event_location_id", referencedColumnName = "id")
     private EventLocation eventLocation;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
-    @Where(clause = "\"deleted\" is null")
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<EventKeyword> eventKeywords;
 
     @Column(name = "start_date", nullable = false)
@@ -46,17 +46,42 @@ public class Event extends DefaultEntity {
     @Column(name = "dsc", nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Where(clause = "\"deleted\" is null")
     private Set<EventImage> eventImages;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Where(clause = "\"deleted\" is null")
     private Set<EventVideo> eventVideos;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category_type", nullable = false)
     private CategoryType categoryType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
+
+    @Column(name = "created", nullable = false)
+    private LocalDateTime created;
+
+    @Column(name = "updated", nullable = false)
+    private LocalDateTime updated;
+
+    @Column(name = "deleted", nullable = true)
+    private LocalDateTime deleted;
+
+    @PrePersist
+    protected void onCreate() {
+        this.created = LocalDateTime.now();
+        this.updated = this.created;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updated = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -138,6 +163,38 @@ public class Event extends DefaultEntity {
         this.categoryType = categoryType;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
+    }
+
+    public LocalDateTime getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDateTime deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -155,6 +212,7 @@ public class Event extends DefaultEntity {
                 .append(eventImages, event.eventImages)
                 .append(eventVideos, event.eventVideos)
                 .append(categoryType, event.categoryType)
+                .append(user, event.user)
                 .append(created, event.created)
                 .append(updated, event.updated)
                 .append(deleted, event.deleted)
@@ -172,6 +230,7 @@ public class Event extends DefaultEntity {
                 .append(eventImages)
                 .append(eventVideos)
                 .append(categoryType)
+                .append(user)
                 .append(created)
                 .append(updated)
                 .append(deleted)
@@ -189,6 +248,7 @@ public class Event extends DefaultEntity {
                 .append("eventImages", eventImages)
                 .append("eventVideos", eventVideos)
                 .append("categoryType", categoryType)
+                .append("user", user)
                 .append("created", created)
                 .append("updated", updated)
                 .append("deleted", deleted)

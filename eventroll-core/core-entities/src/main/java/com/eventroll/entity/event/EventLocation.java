@@ -1,4 +1,4 @@
-package com.eventroll.entity;
+package com.eventroll.entity.event;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_event_location")
-public class EventLocation extends DefaultEntity {
+public class EventLocation {
 
     @Id
     @SequenceGenerator(name = "seq_event_location", sequenceName = "seq_event_location")
@@ -23,10 +23,10 @@ public class EventLocation extends DefaultEntity {
     private Long id;
 
     @Column(name = "lat", nullable = false)
-    private int latitude;
+    private double latitude;
 
     @Column(name = "lon", nullable = false)
-    private int longitude;
+    private double longitude;
 
     @Column(name = "addr", nullable = false)
     private String address;
@@ -39,19 +39,19 @@ public class EventLocation extends DefaultEntity {
         this.id = id;
     }
 
-    public int getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public int getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -77,9 +77,6 @@ public class EventLocation extends DefaultEntity {
                 .append(latitude, eventLocation.latitude)
                 .append(longitude, eventLocation.longitude)
                 .append(address, eventLocation.address)
-                .append(created, eventLocation.created)
-                .append(updated, eventLocation.updated)
-                .append(deleted, eventLocation.deleted)
                 .isEquals();
     }
 
@@ -90,9 +87,6 @@ public class EventLocation extends DefaultEntity {
                 .append(latitude)
                 .append(longitude)
                 .append(address)
-                .append(created)
-                .append(updated)
-                .append(deleted)
                 .toHashCode();
     }
 
@@ -103,9 +97,6 @@ public class EventLocation extends DefaultEntity {
                 .append("latitude", latitude)
                 .append("longitude", longitude)
                 .append("address", address)
-                .append("created", created)
-                .append("updated", updated)
-                .append("deleted", deleted)
                 .toString();
     }
 }
