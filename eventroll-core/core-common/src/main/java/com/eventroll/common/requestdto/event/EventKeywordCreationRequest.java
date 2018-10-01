@@ -19,6 +19,10 @@ public class EventKeywordCreationRequest {
         this.name = name;
     }
 
+    public EventKeywordCreationRequest() {
+
+    }
+
     public String getName() {
         return name;
     }
