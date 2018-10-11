@@ -1,58 +1,58 @@
-CREATE SEQUENCE seq_event START 1 INCREMENT 50;
-CREATE SEQUENCE seq_event_image START 1 INCREMENT 50;
-CREATE SEQUENCE seq_event_video START 1 INCREMENT 50;
-CREATE SEQUENCE seq_event_key START 1 INCREMENT 50;
-CREATE SEQUENCE seq_event_location START 1 INCREMENT 50;
+create sequence seq_event start 1 increment 50;
+create sequence seq_event_image start 1 increment 50;
+create sequence seq_event_video start 1 increment 50;
+create sequence seq_event_key start 1 increment 50;
+create sequence seq_event_location start 1 increment 50;
 
 
-CREATE TABLE t_event (
-  id                BIGINT        NOT NULL CONSTRAINT pk_event PRIMARY KEY,
-  event_location_id BIGINT        NOT NULL,
-  event_name        VARCHAR(100)  NOT NULL,
-  dsc               VARCHAR(2000) NOT NULL,
-  category_type     VARCHAR(50)   NOT NULL,
-  start_date        TIMESTAMP     NOT NULL,
-  end_date          TIMESTAMP     NOT NULL,
-  created           TIMESTAMP     NOT NULL,
-  updated           TIMESTAMP     NOT NULL,
-  deleted           TIMESTAMP
+create table t_event (
+  id                bigint        not null constraint pk_event primary key,
+  event_location_id bigint        not null,
+  event_name        varchar(100)  not null,
+  dsc               varchar(2000) not null,
+  category_type     varchar(50)   not null,
+  start_date        timestamp     not null,
+  end_date          timestamp     not null,
+  created           timestamp     not null,
+  updated           timestamp     not null,
+  deleted           timestamp
 );
 
 
-CREATE TABLE t_event_keyword (
-  id       BIGINT       NOT NULL CONSTRAINT pk_event_keyword PRIMARY KEY,
-  event_id BIGINT       NOT NULL CONSTRAINT fk_event_keyword_event REFERENCES t_event,
-  name     VARCHAR(200) NOT NULL,
-  created  TIMESTAMP    NOT NULL,
-  updated  TIMESTAMP    NOT NULL,
-  deleted  TIMESTAMP
+create table t_event_keyword (
+  id       bigint       not null constraint pk_event_keyword primary key,
+  event_id bigint       not null constraint fk_event_keyword_event references t_event,
+  name     varchar(200) not null,
+  created  timestamp    not null,
+  updated  timestamp    not null,
+  deleted  timestamp
 );
 
-CREATE TABLE t_event_image (
-  id       BIGINT        NOT NULL CONSTRAINT pk_event_image PRIMARY KEY,
-  event_id BIGINT        NOT NULL CONSTRAINT fk_event_image_event REFERENCES t_event,
-  name     VARCHAR(200)  NOT NULL,
-  dsc      VARCHAR(2000) NOT NULL,
-  data     BYTEA         NOT NULL,
-  created  TIMESTAMP     NOT NULL,
-  updated  TIMESTAMP     NOT NULL,
-  deleted  TIMESTAMP
+create table t_event_image (
+  id       bigint        not null constraint pk_event_image primary key,
+  event_id bigint        not null constraint fk_event_image_event references t_event,
+  name     varchar(200)  not null,
+  dsc      varchar(2000) not null,
+  data     bytea         not null,
+  created  timestamp     not null,
+  updated  timestamp     not null,
+  deleted  timestamp
 );
 
-CREATE TABLE t_event_video (
-  id       BIGINT        NOT NULL CONSTRAINT pk_event_video PRIMARY KEY,
-  event_id BIGINT        NOT NULL CONSTRAINT fk_event_video_event REFERENCES t_event,
-  name     VARCHAR(200)  NOT NULL,
-  dsc      VARCHAR(2000) NOT NULL,
-  data     BYTEA         NOT NULL,
-  created  TIMESTAMP     NOT NULL,
-  updated  TIMESTAMP     NOT NULL,
-  deleted  TIMESTAMP
+create table t_event_video (
+  id       bigint        not null constraint pk_event_video primary key,
+  event_id bigint        not null constraint fk_event_video_event references t_event,
+  name     varchar(200)  not null,
+  dsc      varchar(2000) not null,
+  data     bytea         not null,
+  created  timestamp     not null,
+  updated  timestamp     not null,
+  deleted  timestamp
 );
 
-CREATE TABLE t_event_location (
-  id   BIGINT           NOT NULL CONSTRAINT pk_event_location PRIMARY KEY,
-  lat  DOUBLE PRECISION NOT NULL,
-  lon  DOUBLE PRECISION NOT NULL,
-  addr VARCHAR(200)     NOT NULL
+create table t_event_location (
+  id   bigint           not null constraint pk_event_location primary key,
+  lat  double precision not null,
+  lon  double precision not null,
+  addr varchar(200)     not null
 );

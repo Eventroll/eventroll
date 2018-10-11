@@ -1,25 +1,25 @@
-CREATE SEQUENCE seq_user START 1 INCREMENT 50;
+create sequence seq_user start 1 increment 50;
 
 
-CREATE TABLE t_user (
-  id            BIGINT       NOT NULL CONSTRAINT pk_user PRIMARY KEY,
-  first_name    VARCHAR(100) NOT NULL,
-  last_name     VARCHAR(100) NOT NULL,
-  user_name     VARCHAR(100) NOT NULL,
-  email_address VARCHAR(100) NOT NULL,
-  password      VARCHAR(20)  NOT NULL,
-  enabled       BOOLEAN      NOT NULL,
-  created       TIMESTAMP    NOT NULL,
-  updated       TIMESTAMP    NOT NULL,
-  deleted       TIMESTAMP
+create table t_user (
+  id            bigint       not null constraint pk_user primary key,
+  first_name    varchar(100) not null,
+  last_name     varchar(100) not null,
+  user_name     varchar(100) not null,
+  email_address varchar(100) not null,
+  password      varchar(20)  not null,
+  enabled       boolean      not null,
+  created       timestamp    not null,
+  updated       timestamp    not null,
+  deleted       timestamp
 );
 
-ALTER TABLE t_event
-  ADD COLUMN user_id BIGINT;
+alter table t_event
+  add column user_id bigint;
 
--- TODO : Uncomment when security context will be ready.
--- ALTER TABLE t_event
---   ALTER COLUMN user_id SET NOT NULL;
+-- todo : uncomment when security context will be ready.
+-- alter table t_event
+--   alter column user_id set not null;
 
-ALTER TABLE t_event
-  ADD CONSTRAINT fk_user_keyword_user FOREIGN KEY (user_id) REFERENCES t_user;
+alter table t_event
+  add constraint fk_user_keyword_user foreign key (user_id) references t_user;
